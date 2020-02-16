@@ -9,7 +9,9 @@ public class SecurityRestController {
 	@GetMapping("/CheckRest")
 	public String checkRest()
 	{
-		return "CheckingRestController";
+		
+		return "YES + CheckingRestController";
+		
 	}
 	
 }
