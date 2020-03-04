@@ -1,6 +1,8 @@
 package com.matri.Matri.image.service;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,6 +11,8 @@ import java.nio.file.StandardCopyOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -72,6 +76,35 @@ public class ImageServiceImpl implements ImageService {
 			return fileName;
 		} catch (IOException ex) {
 			throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
+		}
+	}
+
+	public Resource loadFileAsResource(String profileId) {
+		try {
+			String finalPathStrforImageForProfile = basePathStrForImageToUploadForProfiles
+					+ ImageConstants.DIRECTORY_SEP + profileId;
+
+			File folder = new File(finalPathStrforImageForProfile);
+			File[] listOfFiles = folder.listFiles();
+
+			for (File file : listOfFiles) {
+				if (file.isFile()) {
+					System.out.println(file.getName());
+				}
+			}
+			finalPathStrforImageForProfile = finalPathStrforImageForProfile.concat("/" + listOfFiles[0].getName());
+			Path finalPathforImageForProfile = Paths
+					.get(finalPathStrforImageForProfile).toAbsolutePath()
+					.normalize();
+
+			UrlResource resource = new UrlResource(finalPathforImageForProfile.toUri());
+			if (resource.exists()) {
+				return (Resource) resource;
+			} else {
+				throw new MyFileNotFoundException("File not found " + profileId);
+			}
+		} catch (MalformedURLException ex) {
+			throw new MyFileNotFoundException("File not found " + profileId, ex);
 		}
 	}
 }

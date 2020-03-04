@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/nav")
 public class NavigationController {
 
-
-
 	@RequestMapping("/search.do")
 	public String showSearchPage() {
 		return "search";
@@ -27,6 +25,16 @@ public class NavigationController {
 	@RequestMapping("/contact.do")
 	public String showContactPage() {
 		return "contact";
+	}
+
+	@RequestMapping("/groom_profile.do")
+	public String showGroomProfilePage() {
+		return "groom_profile";
+	}
+
+	@RequestMapping("/bride_profile.do")
+	public String showBrideProfilePage() {
+		return "bride_profile";
 	}
 
 }

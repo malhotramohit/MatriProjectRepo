@@ -1,4 +1,4 @@
-package com.matri.Matri.controller.profile;
+package com.matri.Matri.clientprofile.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
