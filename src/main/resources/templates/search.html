@@ -86,7 +86,7 @@ function fire_ajax_submit() {
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
-        url: "/file/uploadimage.do",
+        url: "/image/uploadimage.do",
         data: data,
         //http://api.jquery.com/jQuery.ajax/
         //https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
@@ -1100,7 +1100,7 @@ function fire_ajax_submit() {
 											<label class="col-sm-5 control-label1" for="sex">Image
 												: </label>
 											<div class="col-sm-7 form_radios">
-												<input type="file" name="file">
+												<input type="file" name="image">
 
 												<!--<hr />
 									<p id="sel"></p><br />
