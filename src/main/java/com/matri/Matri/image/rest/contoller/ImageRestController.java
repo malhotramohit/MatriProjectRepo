@@ -48,10 +48,11 @@ public class ImageRestController {
 		return new ResponseEntity<>("File Uploaded Successfully.", HttpStatus.OK);
 	}
 
-	@GetMapping("/downloadFile/{fileName:.+}")
-	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
+	@GetMapping("/downloadFile/{folderName}/{imageName}")
+	public ResponseEntity<Resource> downloadFile(@PathVariable("folderName") String folderName,
+			@PathVariable("imageName") String imageName, HttpServletRequest request) {
 		// Load file as Resource
-		Resource resource = imageService.loadFileAsResource(fileName);
+		Resource resource = imageService.loadFileAsResource(folderName, imageName);
 
 		// Try to determine file's content type
 		String contentType = null;

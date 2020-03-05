@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.matri.Matri.bean.base.HomeBean;
+import com.matri.Matri.base.bean.HomeBean;
 import com.matri.Matri.service.profile.UserRegistrationService;
 
 @Controller

@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.matri.Matri.image.configuration.ImageUploadProperties;
 import com.matri.Matri.image.contants.ImageConstants;
 import com.matri.Matri.image.exception.FileStorageException;
+import com.matri.Matri.image.model.ImageModel;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -27,11 +30,13 @@ public class ImageServiceImpl implements ImageService {
 	private static final Logger logger = LoggerFactory.getLogger(ImageServiceImpl.class);
 
 	private final String basePathStrForImageToUploadForProfiles;
+	private final String baseUrlStrForImageToDownloadForProfiles;
 
 	@Autowired
 	public ImageServiceImpl(ImageUploadProperties imageUploadProperties) {
 
 		this.basePathStrForImageToUploadForProfiles = imageUploadProperties.getUploadImageDir();
+		this.baseUrlStrForImageToDownloadForProfiles = imageUploadProperties.getDownloadImageUrl();
 
 		Path basePathForImageToUploadForProfiles = Paths.get(basePathStrForImageToUploadForProfiles).toAbsolutePath()
 				.normalize();
@@ -79,10 +84,10 @@ public class ImageServiceImpl implements ImageService {
 		}
 	}
 
-	public Resource loadFileAsResource(String profileId) {
+	public Resource loadFileAsResource(String folderName, String imageName) {
 		try {
 			String finalPathStrforImageForProfile = basePathStrForImageToUploadForProfiles
-					+ ImageConstants.DIRECTORY_SEP + profileId;
+					+ ImageConstants.DIRECTORY_SEP + folderName;
 
 			File folder = new File(finalPathStrforImageForProfile);
 			File[] listOfFiles = folder.listFiles();
@@ -92,19 +97,39 @@ public class ImageServiceImpl implements ImageService {
 					System.out.println(file.getName());
 				}
 			}
-			finalPathStrforImageForProfile = finalPathStrforImageForProfile.concat("/" + listOfFiles[0].getName());
-			Path finalPathforImageForProfile = Paths
-					.get(finalPathStrforImageForProfile).toAbsolutePath()
-					.normalize();
+			finalPathStrforImageForProfile = finalPathStrforImageForProfile.concat("/" + imageName);
+			Path finalPathforImageForProfile = Paths.get(finalPathStrforImageForProfile).toAbsolutePath().normalize();
 
 			UrlResource resource = new UrlResource(finalPathforImageForProfile.toUri());
 			if (resource.exists()) {
 				return (Resource) resource;
 			} else {
-				throw new MyFileNotFoundException("File not found " + profileId);
+				throw new MyFileNotFoundException("File not found " + folderName);
 			}
 		} catch (MalformedURLException ex) {
-			throw new MyFileNotFoundException("File not found " + profileId, ex);
+			throw new MyFileNotFoundException("File not found " + folderName, ex);
 		}
+	}
+
+	@Override
+	public List<ImageModel> loadAllImagesByProfileId(String profileId) {
+		String pathStrforFolderForProfile = basePathStrForImageToUploadForProfiles + ImageConstants.DIRECTORY_SEP
+				+ profileId;
+
+		File folder = new File(pathStrforFolderForProfile);
+		File[] listOfFiles = folder.listFiles();
+		List<ImageModel> imageModels = new ArrayList<ImageModel>();
+
+		for (File file : listOfFiles) {
+			String finalUrlStrforImageForProfile = baseUrlStrForImageToDownloadForProfiles
+					.concat(ImageConstants.DIRECTORY_SEP + profileId)
+					.concat(ImageConstants.DIRECTORY_SEP + file.getName());
+			if (file.isFile()) {
+				imageModels.add(new ImageModel(file.getName(), finalUrlStrforImageForProfile));
+			}
+		}
+
+		return imageModels;
+
 	}
 }

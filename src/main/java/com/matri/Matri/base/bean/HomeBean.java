@@ -1,5 +1,4 @@
-package com.matri.Matri.bean.base;
-
+package com.matri.Matri.base.bean;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
@@ -34,3 +33,4 @@ public class HomeBean {
 	}
 
 }
+
