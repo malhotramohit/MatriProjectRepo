@@ -1100,7 +1100,7 @@ function fire_ajax_submit() {
 											<label class="col-sm-5 control-label1" for="sex">Image
 												: </label>
 											<div class="col-sm-7 form_radios">
-												<input type="file" name="image">
+												<input type="file" name="image" id="profile_image_id">
 
 												<!--<hr />
 									<p id="sel"></p><br />
@@ -1250,6 +1250,24 @@ function fire_ajax_submit() {
 		});
 	</script>
 	<!-- //for smooth scrolling -->
+	<script type="text/javascript">
+
+	$("#profile_image_id").change(function () {
+	    filePreview(this);
+	});
+	
+	function filePreview(input) {
+	    if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+	        reader.onload = function (e) {
+	            $('#fileUploadForm + img').remove();
+	            $('#fileUploadForm').after('<img src="'+e.target.result+'" width="450" height="300"/>');
+	        };
+	        reader.readAsDataURL(input.files[0]);
+	    }
+	}
+
+	</script>
 </body>
 <!-- //body -->
 </html>
