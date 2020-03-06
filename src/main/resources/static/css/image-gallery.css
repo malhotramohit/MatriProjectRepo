@@ -1,0 +1,68 @@
+
+/* The grid: Four equal columns that floats next to each other */
+.img-gallerycolumn {
+  float: left;
+  width: 25%;
+  padding: 10px;
+}
+
+/* Style the images inside the grid */
+.img-gallerycolumn img {
+  opacity: 0.img-gallery8; 
+  cursor: pointer; 
+}
+
+.img-gallerycolumn img:hover {
+  opacity: 1;
+}
+
+/* Clear floats after the columns */
+.img-galleryrow:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* The expanding image container */
+.img-gallerycontainer {
+  position: relative;
+  display: none;
+}
+
+/* Expanding image text */
+#imgtext {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  color: white;
+  font-size: 20px;
+}
+
+/* Closable button inside the expanded image */
+.img-galleryclosebtn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: white;
+  font-size: 35px;
+  cursor: pointer;
+}
+
+.img-galleryoverlay {
+  position: absolute; 
+  bottom: 0; 
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+  color: #f1f1f1; 
+  width: 100%;
+  transition: .5s ease;
+  opacity:0;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.img-gallerycontainer:hover .overlay {
+  opacity: 1;
+}

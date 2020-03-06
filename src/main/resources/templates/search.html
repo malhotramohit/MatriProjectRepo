@@ -13,12 +13,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	Template | Search :: w3layouts</title>
 <link href="/css/bootstrap.css" rel="stylesheet" type="text/css"
 	media="all" />
+<link href="/css/image-gallery.css" rel="stylesheet" type="text/css"
+	media="all" />
+<link href="/css/image-uploader.min.css" rel="stylesheet"
+	type="text/css" media="all" />
+
+<link href="/css/ssi-uploader.css" rel="stylesheet" type="text/css"
+	media="all" />
 <!-- bootstrap-CSS -->
 <link href="/css/font-awesome.css" rel="stylesheet" type="text/css"
 	media="all" />
 <!-- Fontawesome-CSS -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script type='text/javascript' src='/js/jquery-2.2.3.min.js'></script>
+<script type='text/javascript' src='/js/image-uploader.min.js'></script>
+<script type='text/javascript' src='/js/ssi-uploader.js'></script>
+
 <!-- Custom Theme files -->
 <link href="/css/menu.css" rel="stylesheet" type="text/css" media="all" />
 <!-- menu style -->
@@ -1093,7 +1103,8 @@ function fire_ajax_submit() {
 									<input type="submit" value="Search" />
 								</form>
 
-								<form method="post" enctype="multipart/form-data" id="fileUploadForm">
+								<!-- <form method="post" enctype="multipart/form-data"
+									id="fileUploadForm">
 									<div class="agileits_advanced_Search">
 										<h5>Image Upload</h5>
 										<div class="form_but1">
@@ -1101,17 +1112,47 @@ function fire_ajax_submit() {
 												: </label>
 											<div class="col-sm-7 form_radios">
 												<input type="file" name="image" id="profile_image_id">
-
-												<!--<hr />
-									<p id="sel"></p><br />
-									<input id="btnRadio" type="button" value="Get Selected Value" />-->
 											</div>
+											<div class="input-images" style="padding-top: .5rem;"></div>
 											<div class="clearfix"></div>
 										</div>
 									</div>
 									<input type="submit" value="Upload" id="btnSubmit" />
+								</form> -->
+								<form id="myForm" method="post">
+									<div class="agileits_advanced_Search">
+										<h5>Image Upload</h5>
+										<div class="form_but1">
+											<input type="file" name="ssi-upload" multiple id="ssi-upload" />
+											<div class="clearfix"></div>
+										</div>
+
+										<div class="form_but1">
+											<h5>Images Uploaded :</h5>
+
+											<!-- The four columns -->
+											<div class="img-galleryrow">
+												<div class="img-gallerycolumn"
+													th:each="imageModel: ${imageModels}">
+													<img th:src="${imageModel.imageUrlStr}" alt="Nature"
+														style="width: 100%" onclick="myFunction(this);">
+													
+												</div>
+											</div>
+
+											<div class="img-gallerycontainer">
+												<span onclick="this.parentElement.style.display='none'"
+													class="closebtn">&times;</span> <img id="expandedImg"
+													style="width: 100%">
+												<div id="imgtext"></div>
+												<div class="img-galleryoverlay">My Name is John</div>
+											</div>
+
+											<div class="clearfix"></div>
+										</div>
+
+									</div>
 								</form>
-						
 							</div>
 						</div>
 					</div>
@@ -1251,7 +1292,7 @@ function fire_ajax_submit() {
 	</script>
 	<!-- //for smooth scrolling -->
 	<script type="text/javascript">
-
+/* 
 	$("#profile_image_id").change(function () {
 	    filePreview(this);
 	});
@@ -1265,9 +1306,59 @@ function fire_ajax_submit() {
 	        };
 	        reader.readAsDataURL(input.files[0]);
 	    }
-	}
+	} */
+
+	$(function(){
+		  $('.input-images').imageUploader();
+		});
+
+	let preloaded = [
+	    {id: 1, src: '1.jpg'},
+	    {id: 2, src: '2.jpg'},
+	    {id: 3, src: '3.jpg'},
+	    // more images here
+	];
+
+	$('.input-images').imageUploader({
+	  preloaded: preloaded,
+	  extensions: ['.jpg', '.jpeg', '.png', '.gif', '.svg'],
+	  mimes: ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'],
+	  maxSize: undefined,
+	  maxFiles: undefined,
+	  imagesInputName: 'image',
+	  preloadedInputName: 'preloaded',
+	  label: 'Drag & Drop files here or click to browse'
+	});
+
 
 	</script>
+
+
+	<script>
+	var uploader = $('#ssi-upload').ssi_uploader({
+        url: '/image/uploadimage.do'
+    });
+
+    $( "#myForm" ).on( "submit", function( event ) {
+        event.preventDefault();
+        uploader.data('ssi_upload').uploadFiles();
+        uploader.on('onUpload.ssi-uploader',function(){
+            $( "#myForm" ).submit();
+        });
+    });
+ 
+</script>
+
+
+	<script>
+function myFunction(imgs) {
+  var expandImg = document.getElementById("expandedImg");
+  var imgText = document.getElementById("imgtext");
+  expandImg.src = imgs.src;
+  imgText.innerHTML = imgs.alt;
+  expandImg.parentElement.style.display = "block";
+}
+</script>
 </body>
 <!-- //body -->
 </html>

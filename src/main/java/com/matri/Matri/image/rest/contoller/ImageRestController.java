@@ -36,7 +36,7 @@ public class ImageRestController {
 
 	// Handling file upload request
 	@PostMapping("/uploadimage.do")
-	public ResponseEntity<Object> imageUpload(@RequestParam("image") MultipartFile file) throws IOException {
+	public ResponseEntity<Object> imageUpload(@RequestParam("ssi-upload") MultipartFile file) throws IOException {
 
 		// Save file on system
 		if (!file.getOriginalFilename().isEmpty()) {

@@ -18,7 +18,8 @@ public class NavigationController {
 	}
 
 	@RequestMapping("/search.do")
-	public String showSearchPage() {
+	public String showSearchPage(Model model) {
+		model.addAttribute("imageModels", navigationBean.loadAllImagesByProfileId("MohitMalhotra-P123"));
 		return "search";
 	}
 
