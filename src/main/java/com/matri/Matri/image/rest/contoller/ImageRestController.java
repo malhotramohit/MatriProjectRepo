@@ -11,6 +11,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,8 +70,26 @@ public class ImageRestController {
 		}
 
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
 	}
 
+	@DeleteMapping("/downloadFile/{folderName}/{imageName}")
+	public ResponseEntity<Object> deleteFile(@PathVariable("folderName") String folderName,
+			@PathVariable("imageName") String imageName, HttpServletRequest request) {
+
+		logger.info("inside delete-----");
+		// Load file as Resource
+		Object msg = imageService.deleteFile(folderName, imageName);
+
+		return new ResponseEntity<>("File deleted Successfully." + msg, HttpStatus.OK);
+	}
+
+	@GetMapping("/api/getimage/{folderName}/{imageName}")
+	public ResponseEntity<Object> getImageModel(@PathVariable("folderName") String folderName,
+			@PathVariable("imageName") String imageName, HttpServletRequest request) {
+
+		return new ResponseEntity<>(imageService.loadAllImagesByProfileId("MohitMalhotra-P123"), HttpStatus.OK);
+
+	}
 }

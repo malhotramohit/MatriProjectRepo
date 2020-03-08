@@ -15,4 +15,6 @@ public interface ImageService {
 
 	List<ImageModel> loadAllImagesByProfileId(String profileId);
 
+	Object deleteFile(String folderName, String imageName);
+
 }

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -119,17 +120,30 @@ public class ImageServiceImpl implements ImageService {
 		File folder = new File(pathStrforFolderForProfile);
 		File[] listOfFiles = folder.listFiles();
 		List<ImageModel> imageModels = new ArrayList<ImageModel>();
-
-		for (File file : listOfFiles) {
-			String finalUrlStrforImageForProfile = baseUrlStrForImageToDownloadForProfiles
-					.concat(ImageConstants.DIRECTORY_SEP + profileId)
-					.concat(ImageConstants.DIRECTORY_SEP + file.getName());
-			if (file.isFile()) {
-				imageModels.add(new ImageModel(file.getName(), finalUrlStrforImageForProfile));
+		if (null != listOfFiles && listOfFiles.length > 0) {
+			for (File file : listOfFiles) {
+				String finalUrlStrforImageForProfile = baseUrlStrForImageToDownloadForProfiles
+						.concat(ImageConstants.DIRECTORY_SEP + profileId)
+						.concat(ImageConstants.DIRECTORY_SEP + file.getName());
+				if (file.isFile()) {
+					imageModels.add(new ImageModel(file.getName(), finalUrlStrforImageForProfile));
+				}
 			}
+
 		}
 
 		return imageModels;
 
+	}
+
+	public Object deleteFile(String folderName, String imageName) {
+		String finalPathStrforImageForProfile = basePathStrForImageToUploadForProfiles + ImageConstants.DIRECTORY_SEP
+				+ folderName + ImageConstants.DIRECTORY_SEP + imageName;
+
+		File fileToDelete = new File(finalPathStrforImageForProfile);
+		if (!fileToDelete.delete()) {
+			throw new MyFileNotFoundException("File not found " + folderName);
+		}
+		return finalPathStrforImageForProfile;
 	}
 }

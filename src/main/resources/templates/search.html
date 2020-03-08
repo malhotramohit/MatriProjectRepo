@@ -28,6 +28,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <script type='text/javascript' src='/js/jquery-2.2.3.min.js'></script>
 <script type='text/javascript' src='/js/image-uploader.min.js'></script>
 <script type='text/javascript' src='/js/ssi-uploader.js'></script>
+<script type='text/javascript' src='/js/zoombox.js'></script>
 
 <!-- Custom Theme files -->
 <link href="/css/menu.css" rel="stylesheet" type="text/css" media="all" />
@@ -37,6 +38,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!--//theme-style-->
 <link rel="stylesheet" type="text/css"
 	href="/css/easy-responsive-tabs.css " />
+<link rel="stylesheet" type="text/css" href="/css/zoombox.css " />
 <!--meta data-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
@@ -44,7 +46,37 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	content="Match Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
 <script type="application/x-javascript">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 <!--//meta data-->
 <!-- online fonts -->
@@ -69,59 +101,58 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </script>
 <!-- //nav smooth scroll -->
 <script type="text/javascript">
-$(document).ready(function () {
+	$(document).ready(function() {
 
-    $("#btnSubmit").click(function (event) {
+		$("#btnSubmit").click(function(event) {
 
-        //stop submit the form, we will post it manually.
-        event.preventDefault();
+			//stop submit the form, we will post it manually.
+			event.preventDefault();
 
-        fire_ajax_submit();
+			fire_ajax_submit();
 
-    });
+		});
 
-});
+	});
 
-function fire_ajax_submit() {
+	function fire_ajax_submit() {
 
-    // Get form
-    var form = $('#fileUploadForm')[0];
+		// Get form
+		var form = $('#fileUploadForm')[0];
 
-    var data = new FormData(form);
+		var data = new FormData(form);
 
-    data.append("CustomField", "This is some extra data, testing");
+		data.append("CustomField", "This is some extra data, testing");
 
-    $("#btnSubmit").prop("disabled", true);
+		$("#btnSubmit").prop("disabled", true);
 
-    $.ajax({
-        type: "POST",
-        enctype: 'multipart/form-data',
-        url: "/image/uploadimage.do",
-        data: data,
-        //http://api.jquery.com/jQuery.ajax/
-        //https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
-        processData: false, //prevent jQuery from automatically transforming the data into a query string
-        contentType: false,
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
+		$.ajax({
+			type : "POST",
+			enctype : 'multipart/form-data',
+			url : "/image/uploadimage.do",
+			data : data,
+			//http://api.jquery.com/jQuery.ajax/
+			//https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
+			processData : false, //prevent jQuery from automatically transforming the data into a query string
+			contentType : false,
+			cache : false,
+			timeout : 600000,
+			success : function(data) {
 
-            $("#result").text(data);
-            console.log("SUCCESS : ", data);
-            $("#btnSubmit").prop("disabled", false);
+				$("#result").text(data);
+				console.log("SUCCESS : ", data);
+				$("#btnSubmit").prop("disabled", false);
 
-        },
-        error: function (e) {
+			},
+			error : function(e) {
 
-            $("#result").text(e.responseText);
-            console.log("ERROR : ", e);
-            $("#btnSubmit").prop("disabled", false);
+				$("#result").text(e.responseText);
+				console.log("ERROR : ", e);
+				$("#btnSubmit").prop("disabled", false);
 
-        }
-    });
+			}
+		});
 
-}
-
+	}
 </script>
 </head>
 <!-- //head -->
@@ -1128,26 +1159,21 @@ function fire_ajax_submit() {
 										</div>
 
 										<div class="form_but1">
-											<h5>Images Uploaded :</h5>
+											<h5>Image Gallery :</h5>
+											<label id="refresh_img_gallery_id"
+												class="col-sm-5 control-label1" for="sex">Refresh
+												Gallery</label>
+											<!-- <div class="form_but1" id="img_gallery"
+												th:each="imageModel: ${imageModels}">
 
-											<!-- The four columns -->
-											<div class="img-galleryrow">
-												<div class="img-gallerycolumn"
-													th:each="imageModel: ${imageModels}">
-													<img th:src="${imageModel.imageUrlStr}" alt="Nature"
-														style="width: 100%" onclick="myFunction(this);">
-													
-												</div>
+												<a class="zoombox zgallery1"
+													th:attr="title=${imageModel.imageUrlStr}"
+													th:href="${imageModel.imageUrlStr}"><img
+													th:src="${imageModel.imageUrlStr}"
+													style="border: 1px solid #ddd; /* Gray border */ border-radius: 4px; /* Rounded border */ padding: 5px; /* Some padding */ width: 150px;" /></a>
 											</div>
-
-											<div class="img-gallerycontainer">
-												<span onclick="this.parentElement.style.display='none'"
-													class="closebtn">&times;</span> <img id="expandedImg"
-													style="width: 100%">
-												<div id="imgtext"></div>
-												<div class="img-galleryoverlay">My Name is John</div>
-											</div>
-
+ -->
+											<div class="form_but1" id="img_gallery"></div>
 											<div class="clearfix"></div>
 										</div>
 
@@ -1292,73 +1318,155 @@ function fire_ajax_submit() {
 	</script>
 	<!-- //for smooth scrolling -->
 	<script type="text/javascript">
-/* 
-	$("#profile_image_id").change(function () {
-	    filePreview(this);
-	});
-	
-	function filePreview(input) {
-	    if (input.files && input.files[0]) {
-	        var reader = new FileReader();
-	        reader.onload = function (e) {
-	            $('#fileUploadForm + img').remove();
-	            $('#fileUploadForm').after('<img src="'+e.target.result+'" width="450" height="300"/>');
-	        };
-	        reader.readAsDataURL(input.files[0]);
-	    }
-	} */
+		/* 
+		 $("#profile_image_id").change(function () {
+		 filePreview(this);
+		 });
+		
+		 function filePreview(input) {
+		 if (input.files && input.files[0]) {
+		 var reader = new FileReader();
+		 reader.onload = function (e) {
+		 $('#fileUploadForm + img').remove();
+		 $('#fileUploadForm').after('<img src="'+e.target.result+'" width="450" height="300"/>');
+		 };
+		 reader.readAsDataURL(input.files[0]);
+		 }
+		 } */
 
-	$(function(){
-		  $('.input-images').imageUploader();
+		$(function() {
+			$('.input-images').imageUploader();
 		});
 
-	let preloaded = [
-	    {id: 1, src: '1.jpg'},
-	    {id: 2, src: '2.jpg'},
-	    {id: 3, src: '3.jpg'},
-	    // more images here
-	];
+		let preloaded = [ {
+			id : 1,
+			src : '1.jpg'
+		}, {
+			id : 2,
+			src : '2.jpg'
+		}, {
+			id : 3,
+			src : '3.jpg'
+		},
+		// more images here
+		];
 
-	$('.input-images').imageUploader({
-	  preloaded: preloaded,
-	  extensions: ['.jpg', '.jpeg', '.png', '.gif', '.svg'],
-	  mimes: ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'],
-	  maxSize: undefined,
-	  maxFiles: undefined,
-	  imagesInputName: 'image',
-	  preloadedInputName: 'preloaded',
-	  label: 'Drag & Drop files here or click to browse'
-	});
-
-
+		$('.input-images').imageUploader(
+				{
+					preloaded : preloaded,
+					extensions : [ '.jpg', '.jpeg', '.png', '.gif', '.svg' ],
+					mimes : [ 'image/jpeg', 'image/png', 'image/gif',
+							'image/svg+xml' ],
+					maxSize : undefined,
+					maxFiles : undefined,
+					imagesInputName : 'image',
+					preloadedInputName : 'preloaded',
+					label : 'Drag & Drop files here or click to browse'
+				});
 	</script>
 
 
 	<script>
-	var uploader = $('#ssi-upload').ssi_uploader({
-        url: '/image/uploadimage.do'
-    });
+		var uploader = $('#ssi-upload').ssi_uploader({
+			url : '/image/uploadimage.do'
+		});
 
-    $( "#myForm" ).on( "submit", function( event ) {
-        event.preventDefault();
-        uploader.data('ssi_upload').uploadFiles();
-        uploader.on('onUpload.ssi-uploader',function(){
-            $( "#myForm" ).submit();
-        });
-    });
- 
-</script>
+		$("#myForm").on("submit", function(event) {
+			event.preventDefault();
+			uploader.data('ssi_upload').uploadFiles();
+			uploader.on('onUpload.ssi-uploader', function() {
+				$("#myForm").submit();
+			});
+		});
+	</script>
 
 
 	<script>
-function myFunction(imgs) {
-  var expandImg = document.getElementById("expandedImg");
-  var imgText = document.getElementById("imgtext");
-  expandImg.src = imgs.src;
-  imgText.innerHTML = imgs.alt;
-  expandImg.parentElement.style.display = "block";
-}
-</script>
+		function myFunction(imgs) {
+			var expandImg = document.getElementById("expandedImg");
+			var imgText = document.getElementById("imgtext");
+			expandImg.src = imgs.src;
+			imgText.innerHTML = imgs.alt;
+			expandImg.parentElement.style.display = "block";
+		}
+	</script>
+	<script type="text/javascript">
+		$('a.zoombox').zoombox({
+
+			// overlay opacity
+			opacity : 0.8,
+
+			// the duration of the animation              
+			duration : 800,
+
+			// enable/disable the animation
+			animation : true,
+
+			// width/height of the lightbox
+			width : 600,
+			height : 400,
+
+			// enable/disable image preview in gallery mode
+			gallery : true,
+
+			// enable/disable video autoplay
+			autoplay : false,
+
+			// allow images bigger than screen
+			overflow : false
+
+		});
+	</script>
+	<script>
+		$('#refresh_img_gallery_id').click(function() {
+			location.reload();
+		});
+	</script>
+
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+	    $.ajax({
+	        url: "http://localhost:5000/image/api/getimage/MohitMalhotra-P123/Copy of Menu - Made with PosterMyWall.jpg"
+	    }).then(function(data) {
+	    	$.each(data, function(key,value) {
+	    		console.log(value.imageUrlStr);
+	    		
+	    		var div = document.createElement('div');
+	    		div.setAttribute('class', '"form_but1"'); // and make sure myclass has some styles in css
+
+	    		
+	    		var image = document.createElement('img');
+	    		image.src=value.imageUrlStr;
+	    		image.setAttribute("style","border: 1px solid #ddd; /* Gray border */ border-radius: 4px; /* Rounded border */ padding: 5px; /* Some padding */ width: 150px");
+	    		image.setAttribute("title","Your text here");
+	    		
+	    		  var a = document.createElement('a');  
+	    		  a.setAttribute("class", "zoombox zgallery1");
+                  
+	                // Create the text node for anchor element. 
+	                  
+	                // Append the text node to anchor element. 
+	                a.append(image);  
+	                  
+	                // Set the title. 
+	                a.title = "This is Link";  
+	                  
+	                // Set the href property. 
+	                a.href = value.imageUrlStr;
+	                
+	    		
+
+	                div.append(a);
+
+
+	    		$('#img_gallery').append(div);
+
+	    		}); 
+	    });
+	});
+	</script>
+	
 </body>
 <!-- //body -->
 </html>

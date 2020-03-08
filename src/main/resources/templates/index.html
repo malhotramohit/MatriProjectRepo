@@ -19,6 +19,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!-- Fontawesome-CSS -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script type='text/javascript' src='/js/jquery-2.2.3.min.js'></script>
+<script type='text/javascript' src='/js/pwstrength.js'></script>
+
 <!-- Custom Theme files -->
 <link href="/css/menu.css" rel="stylesheet" type="text/css" media="all" />
 <!-- menu style -->
@@ -41,7 +43,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	
 	
+	
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
 
 
 
@@ -112,10 +120,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="clearfix"></div>
 			<div class="agileits-register">
 				<h3>Register NOW!</h3>
-				<form th:action="@{/profile/registeruser.do}" th:object="${homeBean}" method="post">
+				<form action="/" method="POST" enctype="utf8">
 					<div class="w3_modal_body_grid">
 						<span>Profile For:</span> <select id="w3_country"
-							onchange="change_country(this.value)" class="frm-field required" th:field="*{matriUserRegisterationModel.profileFor}">
+							onchange="change_country(this.value)" class="frm-field required"
+							name="profileFor">
 							<option value="null">Select</option>
 							<option value="null">Myself</option>
 							<option value="null">Son</option>
@@ -127,18 +136,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</select>
 					</div>
 					<div class="w3_modal_body_grid w3_modal_body_grid1">
-						<span>Name:</span> <input type="text" name="Name" placeholder=" "
-							required="" th:field="*{matriUserRegisterationModel.name}" />
+						<span>Name:</span> <input type="text" name="name" placeholder=" "
+							required="" />
 					</div>
 					<div class="w3_modal_body_grid">
 						<span>Gender:</span>
 						<div class="w3_gender">
 							<div class="colr ert">
-								<label class="radio"><input type="radio" name="radio" 
-									checked=""  th:text="*{matriUserRegisterationModel.gender}" th:value="*{matriUserRegisterationModel.gender}"><i></i>Male</label>
+								<label class="radio"><input type="radio" name="gender"
+									checked=""><i></i>Male</label>
 							</div>
 							<div class="colr">
-								<label class="radio"><input type="radio" name="radio"   th:text="*{matriUserRegisterationModel.gender}" th:value="*{matriUserRegisterationModel.gender}"><i></i>Female</label>
+								<label class="radio"><input type="radio" name="gender"><i></i>Female</label>
 							</div>
 							<div class="clearfix"></div>
 						</div>
@@ -146,14 +155,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="w3_modal_body_grid w3_modal_body_grid1">
 						<span>Date Of Birth:</span> <input class="date" id="datepicker"
-							name="Text" type="text" value="mm/dd/yyyy"
+							name="dateOfBirth" type="text" value="mm/dd/yyyy"
 							onfocus="this.value = '';"
 							onblur="if (this.value == '') {this.value = '2/08/2013';}"
-							required="" th:field="*{matriUserRegisterationModel.dateOfBirth}"/>
+							required="">
 					</div>
 					<div class="w3_modal_body_grid">
 						<span>religion:</span> <select id="w3_country1"
-							onchange="change_country(this.value)" class="frm-field required" th:field="*{matriUserRegisterationModel.religion}">
+							onchange="change_country(this.value)" class="frm-field required"
+							name="religion">
 							<option value="null">Select Religion</option>
 							<option value="null">Muslim</option>
 							<option value="null">Hindu</option>
@@ -167,7 +177,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="w3_modal_body_grid w3_modal_body_grid1">
 						<span>Mobile No:</span>
 						<!-- country codes (ISO 3166) and Dial codes. -->
-						<input id="phone" type="tel" th:field="*{matriUserRegisterationModel.mobileNum}">
+						<input id="phone" type="tel" name="mobileNum">
 						<!-- Load jQuery from CDN so can run demo immediately -->
 						<script src="/js/intlTelInput.js"></script>
 						<script>
@@ -195,17 +205,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</script>
 					</div>
 					<div class="w3_modal_body_grid">
-						<span>Email:</span> <input type="email" name="Email"
-							placeholder=" " required="" th:field="*{matriUserRegisterationModel.email}"/>
+						<span>Email:</span> <input type="email" name="email"
+							placeholder=" " required="" />
 					</div>
 					<div class="w3_modal_body_grid w3_modal_body_grid1">
-						<span>Password:</span> <input type="password" name="Password"
-							placeholder=" " required="" th:field="*{matriUserRegisterationModel.password}" />
+						<span>Password:</span> <input type="password" name="password"
+							placeholder=" " required=""
+							/>
+					</div>
+					<div class="w3_modal_body_grid w3_modal_body_grid1">
+						<span>Confirm:</span> <input type="password"
+							name="matchingPassword" placeholder=" " required="" />
 					</div>
 					<div class="w3-agree">
 						<input type="checkbox" id="c1" name="cc"> <label
 							class="agileits-agree">I have read & agree to the <a
 							href="terms.html">Terms and Conditions</a></label>
+					</div>
+					<div>
+						<h6 class="alert alert-danger" th:text="#{message.sessionExpired}">expired</h6>
 					</div>
 					<input type="submit" th:value="#{app.lbl.registerme}">
 					<div class="clearfix"></div>
@@ -759,6 +777,84 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		});
 	</script>
 	<!-- //for smooth scrolling -->
+
+	<script th:inline="javascript">
+var serverContext = [[@{/}]];
+
+$(document).ready(function () {
+	$('form').submit(function(event) {
+		register(event);
+	});
+	
+	$(":password").keyup(function(){
+		if($("#password").val() != $("#matchPassword").val()){
+	        $("#globalError").show().html(/*[[#{PasswordMatches.user}]]*/);
+	    }else{
+	    	$("#globalError").html("").hide();
+	    }
+	});
+	
+	options = {
+		    common: {minChar:8},
+		    ui: {
+		    	showVerdictsInsideProgressBar:true,
+		    	showErrors:true,
+		    	errorMessages:{
+		    		  wordLength: /*[[#{error.wordLength}]]*/,
+		    		  wordNotEmail: /*[[#{error.wordNotEmail}]]*/,
+		    		  wordSequences: /*[[#{error.wordSequences}]]*/,
+		    		  wordLowercase: /*[[#{error.wordLowercase}]]*/,
+		    		  wordUppercase: /*[[#{error.wordUppercase}]]*/,
+		    	          wordOneNumber: /*[[#{error.wordOneNumber}]]*/,
+		    		  wordOneSpecialChar: /*[[#{error.wordOneSpecialChar}]]*/
+		    		}
+		    	}
+		};
+	 $('#password').pwstrength(options);
+});
+
+function register(event){
+	event.preventDefault();
+    $(".alert").html("").hide();
+    $(".error-list").html("");
+    if($("#password").val() != $("#matchPassword").val()){
+    	$("#globalError").show().html(/*[[#{PasswordMatches.user}]]*/);
+    	return;
+    }
+    var formData= $('form').serialize();
+    $.post(serverContext + "user/registration",formData ,function(data){
+        if(data.message == "success"){
+            window.location.href = serverContext + "successRegister.html";
+        }
+        
+    })
+    .fail(function(data) {
+        if(data.responseJSON.error.indexOf("MailError") > -1)
+        {
+            window.location.href = serverContext + "emailError.html";
+        }
+        else if(data.responseJSON.error == "UserAlreadyExist"){
+            $("#emailError").show().html(data.responseJSON.message);
+        }
+        else if(data.responseJSON.error.indexOf("InternalError") > -1){
+            window.location.href = serverContext + "login?message=" + data.responseJSON.message;
+        }
+        else{
+        	var errors = $.parseJSON(data.responseJSON.message);
+            $.each( errors, function( index,item ){
+            	if (item.field){
+            		$("#"+item.field+"Error").show().append(item.defaultMessage+"<br/>");
+            	}
+            	else {
+            		$("#globalError").show().append(item.defaultMessage+"<br/>");
+            	}
+               
+            });
+        }
+    });
+}
+
+</script>
 
 </body>
 <!-- //body -->

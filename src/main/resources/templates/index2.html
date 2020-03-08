@@ -9,8 +9,85 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html xmlns:th="https://thymeleaf.org">
 <!-- head -->
 <head>
+<title>Match a Matrimonial Category Bootstrap Responsive Web
+	Template | index :: w3layouts</title>
+<link href="/css/bootstrap.css" rel="stylesheet" type="text/css"
+	media="all" />
+<!-- bootstrap-CSS -->
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css"
+	media="all" />
+<!-- Fontawesome-CSS -->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type='text/javascript' src='/js/jquery-2.2.3.min.js'></script>
+<!-- Custom Theme files -->
+<link href="/css/menu.css" rel="stylesheet" type="text/css" media="all" />
+<!-- menu style -->
+<!--theme-style-->
+<link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<!--//theme-style-->
+<link rel="stylesheet" type="text/css"
+	href="/css/easy-responsive-tabs.css " />
+<!--meta data-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="keywords"
+	content="Match Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
+<script type="application/x-javascript">
+	
+	
+	
+	
+	
+	
+	
+	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
 
-<div th:replace="common :: myhead"></div>
+
+
+
+
+
+
+</script>
+<!--//meta data-->
+<!-- online fonts -->
+<link
+	href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&amp;subset=devanagari,latin-ext"
+	rel="stylesheet">
+<link
+	href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese"
+	rel="stylesheet">
+<!-- /online fonts -->
+<!-- nav smooth scroll -->
+<script>
+	$(document).ready(function() {
+		$(".dropdown").hover(function() {
+			$('.dropdown-menu', this).stop(true, true).slideDown("fast");
+			$(this).toggleClass('open');
+		}, function() {
+			$('.dropdown-menu', this).stop(true, true).slideUp("fast");
+			$(this).toggleClass('open');
+		});
+	});
+</script>
+<!-- //nav smooth scroll -->
+<!-- Calendar -->
+<link rel="stylesheet" href="/css/jquery-ui.css" />
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/common.js"></script>
+<script>
+	$(function() {
+		$("#datepicker").datepicker({
+			maxDate : '0',
+			changeYear : true,
+			changeMonth : true,
+			yearRange : yrRange
+		});
+	});
+</script>
+<!-- //Calendar -->
+<link rel="stylesheet" href="/css/intlTelInput.css">
 </head>
 <!-- //head -->
 <!-- body -->
@@ -18,9 +95,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 	<!-- header -->
 	<header>
-
-		<div th:replace="common :: myHeader"></div>
-
+		<div th:replace="common :: header"></div>
 
 	</header>
 	<!-- /header -->
@@ -29,17 +104,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="container">
 			<div class="logo">
 				<h1>
-					<a class="cd-logo link link--takiri" href="index.html">Match <span><i
+					<a class="cd-logo link link--takiri" th:href="@{/}"><label
+						th:text="#{app.title.name}"></label> <span><i
 							class="fa fa-heart" aria-hidden="true"></i>Made in heaven.</span></a>
 				</h1>
 			</div>
 			<div class="clearfix"></div>
 			<div class="agileits-register">
 				<h3>Register NOW!</h3>
-				<form action="#" method="post">
+				<form th:action="@{/profile/registeruser.do}" th:object="${homeBean}" method="post">
 					<div class="w3_modal_body_grid">
 						<span>Profile For:</span> <select id="w3_country"
-							onchange="change_country(this.value)" class="frm-field required">
+							onchange="change_country(this.value)" class="frm-field required" th:field="*{matriUserRegisterationModel.profileFor}">
 							<option value="null">Select</option>
 							<option value="null">Myself</option>
 							<option value="null">Son</option>
@@ -52,17 +128,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="w3_modal_body_grid w3_modal_body_grid1">
 						<span>Name:</span> <input type="text" name="Name" placeholder=" "
-							required="" />
+							required="" th:field="*{matriUserRegisterationModel.name}" />
 					</div>
 					<div class="w3_modal_body_grid">
 						<span>Gender:</span>
 						<div class="w3_gender">
 							<div class="colr ert">
-								<label class="radio"><input type="radio" name="radio"
-									checked=""><i></i>Male</label>
+								<label class="radio"><input type="radio" name="radio" 
+									checked=""  th:text="*{matriUserRegisterationModel.gender}" th:value="*{matriUserRegisterationModel.gender}"><i></i>Male</label>
 							</div>
 							<div class="colr">
-								<label class="radio"><input type="radio" name="radio"><i></i>Female</label>
+								<label class="radio"><input type="radio" name="radio"   th:text="*{matriUserRegisterationModel.gender}" th:value="*{matriUserRegisterationModel.gender}"><i></i>Female</label>
 							</div>
 							<div class="clearfix"></div>
 						</div>
@@ -73,11 +149,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							name="Text" type="text" value="mm/dd/yyyy"
 							onfocus="this.value = '';"
 							onblur="if (this.value == '') {this.value = '2/08/2013';}"
-							required="" />
+							required="" th:field="*{matriUserRegisterationModel.dateOfBirth}"/>
 					</div>
 					<div class="w3_modal_body_grid">
 						<span>religion:</span> <select id="w3_country1"
-							onchange="change_country(this.value)" class="frm-field required">
+							onchange="change_country(this.value)" class="frm-field required" th:field="*{matriUserRegisterationModel.religion}">
 							<option value="null">Select Religion</option>
 							<option value="null">Muslim</option>
 							<option value="null">Hindu</option>
@@ -91,9 +167,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="w3_modal_body_grid w3_modal_body_grid1">
 						<span>Mobile No:</span>
 						<!-- country codes (ISO 3166) and Dial codes. -->
-						<input id="phone" type="tel">
+						<input id="phone" type="tel" th:field="*{matriUserRegisterationModel.mobileNum}">
 						<!-- Load jQuery from CDN so can run demo immediately -->
-						<script src="js/intlTelInput.js"></script>
+						<script src="/js/intlTelInput.js"></script>
 						<script>
 							$("#phone").intlTelInput({
 								// allowDropdown: false,
@@ -108,9 +184,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								//     callback(countryCode);
 								//   });
 								// },
-								// initialCountry: "auto",
+								 initialCountry: "in",
 								// nationalMode: false,
-								// onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+								// onlyCountries: ['in', 'us', 'ch', 'ca', 'do'],
 								// placeholderNumberType: "MOBILE",
 								// preferredCountries: ['cn', 'jp'],
 								// separateDialCode: true,
@@ -120,18 +196,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="w3_modal_body_grid">
 						<span>Email:</span> <input type="email" name="Email"
-							placeholder=" " required="" />
+							placeholder=" " required="" th:field="*{matriUserRegisterationModel.email}"/>
 					</div>
 					<div class="w3_modal_body_grid w3_modal_body_grid1">
 						<span>Password:</span> <input type="password" name="Password"
-							placeholder=" " required="" />
+							placeholder=" " required="" th:field="*{matriUserRegisterationModel.password}" />
 					</div>
 					<div class="w3-agree">
 						<input type="checkbox" id="c1" name="cc"> <label
 							class="agileits-agree">I have read & agree to the <a
 							href="terms.html">Terms and Conditions</a></label>
 					</div>
-					<input type="submit" value="Register me" />
+					<div> <h6 class="alert alert-danger" th:text="#{message.sessionExpired}">expired</h6></div>
+					<input type="submit" th:value="#{app.lbl.registerme}">
 					<div class="clearfix"></div>
 					<p class="w3ls-login">
 						Already a member? <a href="#" data-toggle="modal"
@@ -229,9 +306,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<ul id="flexiselDemo3">
 					<li>
 						<div class="col-md-3 biseller-column">
-							<a href="groom_profile.html">
+							<a th:href="@{/nav/groom_profile.do}">
 								<div class="profile-image">
-									<img src="images/p1.jpg" class="img-responsive"
+									<img src="/images/p1.jpg" class="img-responsive"
 										alt="profile image">
 									<div class="agile-overlay">
 										<h4>Profile ID: 458645</h4>
@@ -248,47 +325,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</a>
 						</div>
 						<div class="col-md-3 biseller-column">
-							<a href="groom_profile.html">
+							<a th:href="@{/nav/groom_profile.do}">
 								<div class="profile-image">
-									<img src="images/p2.jpg" class="img-responsive"
-										alt="profile image">
-									<div class="agile-overlay">
-										<h4>Profile ID: 458645</h4>
-										<ul>
-											<li><span>Age / Height</span>: 26 / 5'0''</li>
-											<li><span>Caste</span>: Ipsum</li>
-											<li><span>Religion</span>: Lorem</li>
-											<li><span>Profession</span>: IT Software</li>
-											<li><span>Profile Created By</span>: Self</li>
-											<li><span>Location</span>: Semrd, 7th c, Los</li>
-										</ul>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-3 biseller-column">
-							<a href="bride_profile.html">
-								<div class="profile-image">
-									<img src="images/p3.jpg" class="img-responsive"
-										alt="profile image">
-									<div class="agile-overlay">
-										<h4>Profile ID: 458645</h4>
-										<ul>
-											<li><span>Age / Height</span>: 26 / 5'0''</li>
-											<li><span>Caste</span>: Ipsum</li>
-											<li><span>Religion</span>: Lorem</li>
-											<li><span>Profession</span>: IT Software</li>
-											<li><span>Profile Created By</span>: Self</li>
-											<li><span>Location</span>: Semrd, 7th c, Los</li>
-										</ul>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-3 biseller-column">
-							<a href="groom_profile.html">
-								<div class="profile-image">
-									<img src="images/p4.jpg" class="img-responsive"
+									<img src="/images/p2.jpg" class="img-responsive"
 										alt="profile image">
 									<div class="agile-overlay">
 										<h4>Profile ID: 458645</h4>
@@ -307,7 +346,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<div class="col-md-3 biseller-column">
 							<a href="bride_profile.html">
 								<div class="profile-image">
-									<img src="images/p5.jpg" class="img-responsive"
+									<img src="/images/p3.jpg" class="img-responsive"
+										alt="profile image">
+									<div class="agile-overlay">
+										<h4>Profile ID: 458645</h4>
+										<ul>
+											<li><span>Age / Height</span>: 26 / 5'0''</li>
+											<li><span>Caste</span>: Ipsum</li>
+											<li><span>Religion</span>: Lorem</li>
+											<li><span>Profession</span>: IT Software</li>
+											<li><span>Profile Created By</span>: Self</li>
+											<li><span>Location</span>: Semrd, 7th c, Los</li>
+										</ul>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="col-md-3 biseller-column">
+							<a th:href="@{/nav/groom_profile.do}">
+								<div class="profile-image">
+									<img src="/images/p4.jpg" class="img-responsive"
 										alt="profile image">
 									<div class="agile-overlay">
 										<h4>Profile ID: 458645</h4>
@@ -326,26 +384,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<div class="col-md-3 biseller-column">
 							<a href="bride_profile.html">
 								<div class="profile-image">
-									<img src="images/p6.jpg" class="img-responsive"
-										alt="profile image">
-									<div class="agile-overlay">
-										<h4>Profile ID: 458645</h4>
-										<ul>
-											<li><span>Age / Height</span>: 26 / 5'0''</li>
-											<li><span>Caste</span>: Ipsum</li>
-											<li><span>Religion</span>: Lorem</li>
-											<li><span>Profession</span>: IT Software</li>
-											<li><span>Profile Created By</span>: Self</li>
-											<li><span>Location</span>: Semrd, 7th c, Los</li>
-										</ul>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-3 biseller-column">
-							<a href="groom_profile.html">
-								<div class="profile-image">
-									<img src="images/p7.jpg" class="img-responsive"
+									<img src="/images/p5.jpg" class="img-responsive"
 										alt="profile image">
 									<div class="agile-overlay">
 										<h4>Profile ID: 458645</h4>
@@ -364,7 +403,45 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<div class="col-md-3 biseller-column">
 							<a href="bride_profile.html">
 								<div class="profile-image">
-									<img src="images/p8.jpg" class="img-responsive"
+									<img src="/images/p6.jpg" class="img-responsive"
+										alt="profile image">
+									<div class="agile-overlay">
+										<h4>Profile ID: 458645</h4>
+										<ul>
+											<li><span>Age / Height</span>: 26 / 5'0''</li>
+											<li><span>Caste</span>: Ipsum</li>
+											<li><span>Religion</span>: Lorem</li>
+											<li><span>Profession</span>: IT Software</li>
+											<li><span>Profile Created By</span>: Self</li>
+											<li><span>Location</span>: Semrd, 7th c, Los</li>
+										</ul>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="col-md-3 biseller-column">
+							<a th:href="@{/nav/groom_profile.do}">
+								<div class="profile-image">
+									<img src="/images/p7.jpg" class="img-responsive"
+										alt="profile image">
+									<div class="agile-overlay">
+										<h4>Profile ID: 458645</h4>
+										<ul>
+											<li><span>Age / Height</span>: 26 / 5'0''</li>
+											<li><span>Caste</span>: Ipsum</li>
+											<li><span>Religion</span>: Lorem</li>
+											<li><span>Profession</span>: IT Software</li>
+											<li><span>Profile Created By</span>: Self</li>
+											<li><span>Location</span>: Semrd, 7th c, Los</li>
+										</ul>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="col-md-3 biseller-column">
+							<a href="bride_profile.html">
+								<div class="profile-image">
+									<img src="/images/p8.jpg" class="img-responsive"
 										alt="profile image">
 									<div class="agile-overlay">
 										<h4>Profile ID: 458645</h4>
@@ -383,9 +460,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</li>
 					<li>
 						<div class="col-md-3 biseller-column">
-							<a href="groom_profile.html">
+							<a th:href="@{/nav/groom_profile.do}">
 								<div class="profile-image">
-									<img src="images/p9.jpg" class="img-responsive"
+									<img src="/images/p9.jpg" class="img-responsive"
 										alt="profile image">
 									<div class="agile-overlay">
 										<h4>Profile ID: 458645</h4>
@@ -402,9 +479,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</a>
 						</div>
 						<div class="col-md-3 biseller-column">
-							<a href="groom_profile.html">
+							<a th:href="@{/nav/groom_profile.do}">
 								<div class="profile-image">
-									<img src="images/p10.jpg" class="img-responsive"
+									<img src="/images/p10.jpg" class="img-responsive"
 										alt="profile image">
 									<div class="agile-overlay">
 										<h4>Profile ID: 458645</h4>
@@ -421,47 +498,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</a>
 						</div>
 						<div class="col-md-3 biseller-column">
-							<a href="groom_profile.html">
+							<a th:href="@{/nav/groom_profile.do}">
 								<div class="profile-image">
-									<img src="images/p11.jpg" class="img-responsive"
-										alt="profile image">
-									<div class="agile-overlay">
-										<h4>Profile ID: 458645</h4>
-										<ul>
-											<li><span>Age / Height</span>: 26 / 5'0''</li>
-											<li><span>Caste</span>: Ipsum</li>
-											<li><span>Religion</span>: Lorem</li>
-											<li><span>Profession</span>: IT Software</li>
-											<li><span>Profile Created By</span>: Self</li>
-											<li><span>Location</span>: Semrd, 7th c, Los</li>
-										</ul>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-3 biseller-column">
-							<a href="bride_profile.html">
-								<div class="profile-image">
-									<img src="images/p12.jpg" class="img-responsive"
-										alt="profile image">
-									<div class="agile-overlay">
-										<h4>Profile ID: 458645</h4>
-										<ul>
-											<li><span>Age / Height</span>: 26 / 5'0''</li>
-											<li><span>Caste</span>: Ipsum</li>
-											<li><span>Religion</span>: Lorem</li>
-											<li><span>Profession</span>: IT Software</li>
-											<li><span>Profile Created By</span>: Self</li>
-											<li><span>Location</span>: Semrd, 7th c, Los</li>
-										</ul>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-3 biseller-column">
-							<a href="groom_profile.html">
-								<div class="profile-image">
-									<img src="images/p7.jpg" class="img-responsive"
+									<img src="/images/p11.jpg" class="img-responsive"
 										alt="profile image">
 									<div class="agile-overlay">
 										<h4>Profile ID: 458645</h4>
@@ -480,7 +519,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<div class="col-md-3 biseller-column">
 							<a href="bride_profile.html">
 								<div class="profile-image">
-									<img src="images/p5.jpg" class="img-responsive"
+									<img src="/images/p12.jpg" class="img-responsive"
 										alt="profile image">
 									<div class="agile-overlay">
 										<h4>Profile ID: 458645</h4>
@@ -497,9 +536,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</a>
 						</div>
 						<div class="col-md-3 biseller-column">
-							<a href="groom_profile.html">
+							<a th:href="@{/nav/groom_profile.do}">
 								<div class="profile-image">
-									<img src="images/p1.jpg" class="img-responsive"
+									<img src="/images/p7.jpg" class="img-responsive"
 										alt="profile image">
 									<div class="agile-overlay">
 										<h4>Profile ID: 458645</h4>
@@ -516,9 +555,47 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</a>
 						</div>
 						<div class="col-md-3 biseller-column">
-							<a href="groom_profile.html">
+							<a href="bride_profile.html">
 								<div class="profile-image">
-									<img src="images/p2.jpg" class="img-responsive"
+									<img src="/images/p5.jpg" class="img-responsive"
+										alt="profile image">
+									<div class="agile-overlay">
+										<h4>Profile ID: 458645</h4>
+										<ul>
+											<li><span>Age / Height</span>: 26 / 5'0''</li>
+											<li><span>Caste</span>: Ipsum</li>
+											<li><span>Religion</span>: Lorem</li>
+											<li><span>Profession</span>: IT Software</li>
+											<li><span>Profile Created By</span>: Self</li>
+											<li><span>Location</span>: Semrd, 7th c, Los</li>
+										</ul>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="col-md-3 biseller-column">
+							<a th:href="@{/nav/groom_profile.do}">
+								<div class="profile-image">
+									<img src="/images/p1.jpg" class="img-responsive"
+										alt="profile image">
+									<div class="agile-overlay">
+										<h4>Profile ID: 458645</h4>
+										<ul>
+											<li><span>Age / Height</span>: 26 / 5'0''</li>
+											<li><span>Caste</span>: Ipsum</li>
+											<li><span>Religion</span>: Lorem</li>
+											<li><span>Profession</span>: IT Software</li>
+											<li><span>Profile Created By</span>: Self</li>
+											<li><span>Location</span>: Semrd, 7th c, Los</li>
+										</ul>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="col-md-3 biseller-column">
+							<a th:href="@{/nav/groom_profile.do}">
+								<div class="profile-image">
+									<img src="/images/p2.jpg" class="img-responsive"
 										alt="profile image">
 									<div class="agile-overlay">
 										<h4>Profile ID: 458645</h4>
@@ -540,7 +617,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		</div>
 		<!-- //slider -->
 	</div>
-	<script type="text/javascript" src="js/jquery.flexisel.js"></script>
+	<script type="text/javascript" src="/js/jquery.flexisel.js"></script>
 	<!-- flexisel-js -->
 	<script type="text/javascript">
 		$(window).load(function() {
@@ -582,13 +659,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						dummy text ever since the 1500s.</p>
 					<div class="agileits_app-devices">
 						<h5>Download the App</h5>
-						<a href="#"><img src="images/1.png" alt=""></a> <a href="#"><img
-							src="images/2.png" alt=""></a>
+						<a href="#"><img src="/images/1.png" alt=""></a> <a href="#"><img
+							src="/images/2.png" alt=""></a>
 						<div class="clearfix"></div>
 					</div>
 				</div>
 				<div class="col-md-offset-1 col-md-5 app-image">
-					<img src="images/mob.png" alt="">
+					<img src="/images/mob.png" alt="">
 				</div>
 				<div class="clearfix"></div>
 			</div>
@@ -596,13 +673,93 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</div>
 	<!-- /mobile-app -->
 
+	<!-- browse profiles -->
+	<div th:replace="common :: browseProfiles"></div>
 
-	<div th:replace="common :: myFoot"></div>
+	<!-- //browse profiles -->
 
+	<!-- Assisted Service -->
+	<div class="agile-assisted-service text-center">
+		<h4>Assisted Service</h4>
+		<p>Our Relationship Managers have helped thousands of members find
+			their life partners.</p>
+		<a href="assisted_services.html">Know More</a>
+	</div>
+	<!-- //Assisted Service -->
 
-	<div th:replace="common :: myFooter"></div>
+	<!-- Location -->
+	<div class="location w3layouts">
+		<div class="container">
+			<div
+				class="col-md-6 col-sm-6 w3layouts location-grids location-grids-1">
+				<h3>Where We Are</h3>
+				<h5>Our Branches</h5>
+				<p>250+ branches across World, Largest Network of its Kind.</p>
+			</div>
+			<div
+				class="col-md-6 col-sm-6 w3layouts location-grids location-grids-2">
+				<a href="contact.html"><img src="/images/location.jpg"
+					class="img-responsive" alt="Agileits W3layouts" /></a>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<!-- //Location -->
 
+	<!-- Get started -->
+	<div th:replace="common :: yourStoryWaiting"></div>
 
+	<!-- //Get started -->
+
+	<!-- footer -->
+	<footer>
+		<div th:replace="common :: footer"></div>
+
+	</footer>
+	<!-- //footer -->
+	<!-- menu js aim -->
+	<script src="/js/jquery.menu-aim.js">
+		
+	</script>
+	<script src="/js/main.js"></script>
+	<!-- Resource jQuery -->
+	<!-- //menu js aim -->
+	<!-- for bootstrap working -->
+	<script src="/js/bootstrap.js"></script>
+	<!-- //for bootstrap working -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			/*
+			var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+			};
+			 */
+
+			$().UItoTop({
+				easingType : 'easeOutQuart'
+			});
+
+		});
+	</script>
+	<a href="#" id="toTop" style="display: block;"> <span
+		id="toTopHover" style="opacity: 1;"> </span></a>
+	<!-- for smooth scrolling -->
+	<script type="text/javascript" src="/js/move-top.js"></script>
+	<script type="text/javascript" src="/js/easing.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$(".scroll").click(function(event) {
+				event.preventDefault();
+				$('html,body').animate({
+					scrollTop : $(this.hash).offset().top
+				}, 1000);
+			});
+		});
+	</script>
+	<!-- //for smooth scrolling -->
 
 </body>
 <!-- //body -->
