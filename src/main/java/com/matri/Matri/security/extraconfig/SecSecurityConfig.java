@@ -69,7 +69,7 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(final WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**");
+        web.ignoring().antMatchers("/resources/**").anyRequest();
     }
 
     @Override
@@ -83,6 +83,7 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/user/registration*","/user/registration/showSuccessPage*", "/registrationConfirm*", "/expiredAccount*", "/registration*",
                         "/badUser*", "/user/resendRegistrationToken*" ,"/forgetPassword*", "/user/resetPassword*",
                         "/user/changePassword*", "/emailError*", "/resources**","/css/**", "/js/**", "/images/**","/old/user/registration*","/successRegister*","/qrcode*").permitAll()
+              
                 .antMatchers("/invalidSession*").anonymous()
                 .antMatchers("/user/updatePassword*","/user/savePassword*","/updatePassword*").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
                 .anyRequest().hasAuthority("READ_PRIVILEGE")
