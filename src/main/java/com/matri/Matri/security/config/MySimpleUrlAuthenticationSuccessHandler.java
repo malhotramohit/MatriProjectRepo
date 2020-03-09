@@ -99,9 +99,9 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
              	username = authentication.getName();
              }
 
-            return "/homepage.html?user="+username;
+            return "/api/match/profiles.do?user="+username;
         } else if (isAdmin) {
-            return "/nav/groom_profile.do";
+            return "/api/match/profiles.do";
         } else {
             throw new IllegalStateException();
         }

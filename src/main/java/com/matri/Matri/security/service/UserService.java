@@ -68,7 +68,7 @@ public class UserService implements IUserService {
         final User user = new User();
 
         user.setName(accountDto.getName());
-        user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+        user.setPassword(passwordEncoder.encode(accountDto.getPasswordForReg()));
         user.setEmail(accountDto.getEmail());
         user.setUsing2FA(accountDto.isUsing2FA());
         user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));

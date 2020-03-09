@@ -30,7 +30,7 @@ public class UserDto {
 	private Long mobileNum;
 
 	@ValidPassword
-	private String password;
+	private String passwordForReg;
 
 	@NotNull
 	@Size(min = 1)
@@ -101,12 +101,14 @@ public class UserDto {
 		this.mobileNum = mobileNum;
 	}
 
-	public String getPassword() {
-		return password;
+	
+
+	public String getPasswordForReg() {
+		return passwordForReg;
 	}
 
-	public void setPassword(final String password) {
-		this.password = password;
+	public void setPasswordForReg(String passwordForReg) {
+		this.passwordForReg = passwordForReg;
 	}
 
 	public String getMatchingPassword() {
@@ -136,7 +138,7 @@ public class UserDto {
 	@Override
 	public String toString() {
 		return "UserDto [profileFor=" + profileFor + ", name=" + name + ", gender=" + gender + ", dateOfBirth="
-				+ dateOfBirth + ", religion=" + religion + ", mobileNum=" + mobileNum + ", password=" + password
+				+ dateOfBirth + ", religion=" + religion + ", mobileNum=" + mobileNum + ", passwordForReg=" + passwordForReg
 				+ ", matchingPassword=" + matchingPassword + ", email=" + email + ", isUsing2FA=" + isUsing2FA
 				+ ", role=" + role + "]";
 	}

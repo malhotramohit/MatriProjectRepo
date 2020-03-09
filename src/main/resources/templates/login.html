@@ -223,8 +223,8 @@ ul {
 							placeholder=" " required="" />
 					</div>
 					<div class="w3_modal_body_grid w3_modal_body_grid1">
-						<span>Password:</span> <input type="password" name="password"
-							id="password" placeholder=" " required="required" />
+						<span>Password:</span> <input type="password" name="passwordForReg"
+							id="passwordForReg" placeholder=" " required="required" />
 					<span id="passwordError" class="alert alert-danger col-sm-4"
 							style="display: none"></span>
 					</div>
@@ -840,8 +840,8 @@ $(document).ready(function () {
 		register(event);
 	});
 	
-	$(":password").keyup(function(){
-		if($("#password").val() != $("#matchPassword").val()){
+	$(":passwordForReg").keyup(function(){
+		if($("#passwordForReg").val() != $("#matchPassword").val()){
 	        $("#globalError").show().html(/*[[#{PasswordMatches.user}]]*/);
 	    }else{
 	    	$("#globalError").html("").hide();
@@ -864,18 +864,18 @@ $(document).ready(function () {
 		    		}
 		    	}
 		};
-	 $('#password').pwstrength(options);
+	 $('#passwordForReg').pwstrength(options);
 });
 
 function register(event){
 	event.preventDefault();
     $(".alert").html("").hide();
     $(".error-list").html("");
-    if($("#password").val() != $("#matchPassword").val()){
+    if($("#passwordForReg").val() != $("#matchPassword").val()){
     	$("#globalError").show().html(/*[[#{PasswordMatches.user}]]*/);
     	return;
     }
-    var formData= $('form').serialize();
+    var formData= $('#registerformId').serialize();
     $.post(serverContext + "user/registration",formData ,function(data){
         if(data.message == "success"){
             window.location.href = serverContext + "successRegister.html";
