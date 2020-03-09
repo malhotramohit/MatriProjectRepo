@@ -33,6 +33,7 @@ import com.matri.Matri.security.repository.UserRepository;
 @EnableWebSecurity
 public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -69,7 +70,7 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(final WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**").anyRequest();
+        web.ignoring().antMatchers("/resources/**");
     }
 
     @Override
@@ -79,33 +80,32 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/h2/**").permitAll() // to enable access to H2 db's console
-                .antMatchers("/login*","/index*", "/logout*", "/signin/**", "/signup/**", "/customLogin",
-                        "/user/registration*","/user/registration/showSuccessPage*", "/registrationConfirm*", "/expiredAccount*", "/registration*",
+                .antMatchers("/login*","/login*", "/logout*", "/signin/**", "/signup/**", "/customLogin",
+                        "/user/registration*", "/registrationConfirm*", "/expiredAccount*", "/registration*",
                         "/badUser*", "/user/resendRegistrationToken*" ,"/forgetPassword*", "/user/resetPassword*",
-                        "/user/changePassword*", "/emailError*", "/resources**","/css/**", "/js/**", "/images/**","/old/user/registration*","/successRegister*","/qrcode*").permitAll()
-              
+                        "/user/changePassword*", "/emailError*", "/resources/**" , "/css/**","/js/**" ,"/fonts/**", "/images/**" ,"/old/user/registration*","/successRegister*","/qrcode*").permitAll()
                 .antMatchers("/invalidSession*").anonymous()
                 .antMatchers("/user/updatePassword*","/user/savePassword*","/updatePassword*").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
                 .anyRequest().hasAuthority("READ_PRIVILEGE")
                 .and()
             .formLogin()
-                .loginPage("/").loginProcessingUrl("/")
+                .loginPage("/login")
                 .defaultSuccessUrl("/homepage.html")
-                .failureUrl("/index.html?error=true")
+                .failureUrl("/login?error=true")
                 .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler)
                 .authenticationDetailsSource(authenticationDetailsSource)
             .permitAll()
                 .and()
             .sessionManagement()
-                .invalidSessionUrl("/")
+                .invalidSessionUrl("/login.html")
                 .maximumSessions(1).sessionRegistry(sessionRegistry()).and()
                 .sessionFixation().none()
             .and()
             .logout()
                 .logoutSuccessHandler(myLogoutSuccessHandler)
                 .invalidateHttpSession(false)
-                .logoutSuccessUrl("/logout.html?logSucc=true")
+                .logoutSuccessUrl("/login.html?logSucc=true")
                 .deleteCookies("JSESSIONID")
                 .permitAll()
              .and()

@@ -120,7 +120,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="clearfix"></div>
 			<div class="agileits-register">
 				<h3>Register NOW!</h3>
-				<form action="/" method="POST" enctype="utf8">
+				<form id="registerformId" action="/" method="POST" enctype="utf8">
 					<div class="w3_modal_body_grid">
 						<span>Profile For:</span> <select id="w3_country"
 							onchange="change_country(this.value)" class="frm-field required"
@@ -210,12 +210,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="w3_modal_body_grid w3_modal_body_grid1">
 						<span>Password:</span> <input type="password" name="password"
-							placeholder=" " required=""
-							/>
+							id="password" placeholder=" " required="required" />
+
 					</div>
 					<div class="w3_modal_body_grid w3_modal_body_grid1">
-						<span>Confirm:</span> <input type="password"
-							name="matchingPassword" placeholder=" " required="" />
+						<span id="passwordError" class="alert alert-danger col-sm-4"
+							style="display: none"></span>
+					</div>
+					<div class="w3_modal_body_grid w3_modal_body_grid1">
+						<span>Confirm:</span> <input type="password" id="matchPassword"
+							name="matchingPassword" placeholder=" " required="required" />
+					</div>
+					<div class="w3_modal_body_grid w3_modal_body_grid1">
+						<span id="globalError" class="alert alert-danger col-sm-4"
+							style="display: none"></span>
 					</div>
 					<div class="w3-agree">
 						<input type="checkbox" id="c1" name="cc"> <label
@@ -224,11 +232,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div>
 						<h6 class="alert alert-danger" th:text="#{message.sessionExpired}">expired</h6>
+						<h1 id="error" class="alert alert-danger"
+							th:if="${session[SPRING_SECURITY_LAST_EXCEPTION]}"
+							th:text="#{message.logoutError}">error</h1>
+
+						<h1 id="success" class="alert alert-info" th:if="${param.logSucc}"
+							th:text="#{message.logoutSucc}">success</h1>
 					</div>
 					<input type="submit" th:value="#{app.lbl.registerme}">
 					<div class="clearfix"></div>
 					<p class="w3ls-login">
-						Already a member? <a href="#" data-toggle="modal"
+						Already a member? <a href="#" data-toggle="modal" id="login_modal_id"
 							data-target="#myModal">Login</a>
 					</p>
 				</form>
@@ -248,15 +262,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="modal-body">
 							<div class="login-w3ls">
-								<form id="signin" action="#" method="post">
-									<label>User Name </label> <input type="text" name="User Name"
+								<form name='f' action="login" method='POST'
+									onsubmit="return validate();">
+									<label>User Name </label> <input type="text" name="username"
 										placeholder="Username" required=""> <label>Password</label>
-									<input type="password" name="Password" placeholder="Password"
+									<input type="password" name="password" placeholder="Password"
 										required="">
+										
+										<div th:if="${param.error != null}" class="alert alert-danger" th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">error
+											
+										</div>
+										
 									<div class="w3ls-loginr">
 										<input type="checkbox" id="brand" name="checkbox" value="">
 										<span> Remember me ?</span> <a href="#">Forgot password ?</a>
 									</div>
+
 									<div class="clearfix"></div>
 									<input type="submit" name="submit" value="Login">
 									<div class="clearfix"></div>
@@ -272,6 +293,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<div class="clearfix"></div>
 									</div>
 								</form>
+
+								<!-- 
+
+								<form name='f' action="login" method='POST'
+									onsubmit="return validate();">
+									<span id="welcometext">&nbsp;</span> <br />
+									<br /> <label class="col-sm-4"
+										th:text="#{label.form.loginEmail}">Email</label> <span
+										class="col-sm-8"><input class="form-control"
+										type='text' name='username' value='' /></span> <br />
+									<br /> <label class="col-sm-4"
+										th:text="#{label.form.loginPass}">password</label> <span
+										class="col-sm-8"><input class="form-control"
+										type='password' name='password' /></span> <br />
+									<br /> <label class="col-sm-4" th:text="#{label.form.login2fa}">Google
+										Authenticator Verification Code</label> <span class="col-sm-8"><input
+										class="form-control" type='text' name='code' /></span> <br />
+									<br /> <input class="btn btn-primary" name="submit"
+										type="submit" th:value="#{label.form.submit}" />
+
+								</form> -->
 							</div>
 						</div>
 					</div>
@@ -782,7 +824,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 var serverContext = [[@{/}]];
 
 $(document).ready(function () {
-	$('form').submit(function(event) {
+	$('#registerformId').submit(function(event) {
 		register(event);
 	});
 	
@@ -854,6 +896,21 @@ function register(event){
     });
 }
 
+</script>
+
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+
+    var flag = [[${param.error != null}]]; //Your Thymleaf variable
+    window.onload = function() {
+        if(!flag)
+            return; // Exit/Return if the variable is false
+        document.getElementById('login_modal_id').click();
+
+    };
+
+/*]]>*/
 </script>
 
 </body>

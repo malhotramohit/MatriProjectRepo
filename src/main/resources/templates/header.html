@@ -5,6 +5,9 @@
 		<!--<div class="navbar navbar-inverse-blue navbar-fixed-top">-->
 		<div class="navbar-inner">
 			<div class="container">
+				<div class="pull-left">
+					<p th:if="${param.user} != null" th:text="${param.user[0]}">user</p>
+				</div>
 				<div class="menu">
 					<div class="cd-dropdown-wrapper">
 						<a class="cd-dropdown-trigger" href="#0">Browse Profiles by</a>
@@ -312,7 +315,8 @@
 											</div>
 										</div>
 									</ul></li>
-								<li class="last"><a href="contact.html">Contacts</a></li>
+								<li><a href="contact.html">Contacts</a></li>
+								<li class="last"><a th:href="@{/logout}" th:text="#{label.pages.logout}">logout</a></li>
 							</ul>
 						</div>
 						<!-- /.navbar-collapse -->

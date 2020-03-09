@@ -38,7 +38,12 @@ public class MvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addViewControllers(final ViewControllerRegistry registry) {
-		registry.addViewController("/login");
+//		 registry.addViewController("/").setViewName("forward:/index");
+		   registry.addViewController("/").setViewName("forward:/login");
+	        registry.addViewController("/login");
+		registry.addViewController("/index");
+		registry.addViewController("/login.html");
+		registry.addViewController("/peform_login");
 		registry.addViewController("/loginRememberMe");
 		registry.addViewController("/customLogin");
 		registry.addViewController("/registration.html");

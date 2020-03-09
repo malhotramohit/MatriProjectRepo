@@ -101,7 +101,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
             return "/homepage.html?user="+username;
         } else if (isAdmin) {
-            return "/console.html";
+            return "/nav/groom_profile.do";
         } else {
             throw new IllegalStateException();
         }

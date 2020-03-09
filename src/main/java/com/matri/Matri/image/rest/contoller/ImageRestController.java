@@ -50,7 +50,7 @@ public class ImageRestController {
 		return new ResponseEntity<>("File Uploaded Successfully.", HttpStatus.OK);
 	}
 
-	@GetMapping("/downloadFile/{folderName}/{imageName}")
+	@GetMapping("/downloadFile/{folderName}/{imageName:.+}")
 	public ResponseEntity<Resource> downloadFile(@PathVariable("folderName") String folderName,
 			@PathVariable("imageName") String imageName, HttpServletRequest request) {
 		// Load file as Resource
@@ -74,7 +74,7 @@ public class ImageRestController {
 				.body(resource);
 	}
 
-	@DeleteMapping("/downloadFile/{folderName}/{imageName}")
+	@DeleteMapping("/downloadFile/{folderName}/{imageName:.+}")
 	public ResponseEntity<Object> deleteFile(@PathVariable("folderName") String folderName,
 			@PathVariable("imageName") String imageName, HttpServletRequest request) {
 
@@ -85,7 +85,7 @@ public class ImageRestController {
 		return new ResponseEntity<>("File deleted Successfully." + msg, HttpStatus.OK);
 	}
 
-	@GetMapping("/api/getimage/{folderName}/{imageName}")
+	@GetMapping("/api/getimage/{folderName}/{imageName:.+}")
 	public ResponseEntity<Object> getImageModel(@PathVariable("folderName") String folderName,
 			@PathVariable("imageName") String imageName, HttpServletRequest request) {
 

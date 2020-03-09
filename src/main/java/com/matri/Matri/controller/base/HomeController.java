@@ -15,7 +15,7 @@ public class HomeController {
 		this.homeBean = homeBean;
 	}
 
-	@RequestMapping("/")
+	//@RequestMapping("/")
 	public String showSearchPage(Model model) {
 		model.addAttribute("homeBean", homeBean);
 		return "index";
