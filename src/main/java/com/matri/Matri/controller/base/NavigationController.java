@@ -50,4 +50,9 @@ public class NavigationController {
 		return "bride_profile";
 	}
 
+	@RequestMapping("/create")
+	public String createremainingprofile() {
+		return "createprofile";
+	}
+
 }
