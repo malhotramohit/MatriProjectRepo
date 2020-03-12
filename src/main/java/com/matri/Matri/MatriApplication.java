@@ -11,7 +11,7 @@ import com.matri.Matri.image.configuration.ImageUploadProperties;
 @SpringBootApplication
 @EnableConfigurationProperties({ ImageUploadProperties.class })
 public class MatriApplication {
-
+	// test
 	public static void main(String[] args) {
 		SpringApplication.run(MatriApplication.class, args);
 	}
